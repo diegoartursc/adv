@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diego Artur | Advocacia de Vanguarda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f5f5f7;
+            --text-dim: #a1a1a6;
+            --neon-green: #00ff88;
+            --neon-green-dim: rgba(0, 255, 136, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-gradient: linear-gradient(135deg, #00ff88 0%, #00bdff 100%);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            overflow-x: hidden; 
+            line-height: 1.6; 
+        }
+
+        .glass { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; transition: transform 0.1s ease, box-shadow 0.3s ease; position: relative; }
+
+        .navbar { position: fixed; top: 0; width: 100%; height: 80px; z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
+        .logo { font-size: 1.5rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; margin-left: auto; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-size: 0.9rem; }
+        .btn-primary { padding: 0.8rem 1.5rem; background: var(--accent-gradient); border-radius: 50px; color: #000 !important; font-weight: 600; text-decoration: none; display: inline-block; }
+
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 0 10%; text-align: center; }
+        .hero-content { max-width: 900px; z-index: 2; }
+        .section-label { color: var(--neon-green); text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 1rem; display: inline-block; padding: 0.4rem 1rem; border: 1px solid var(--neon-green-dim); border-radius: 50px; background: rgba(0, 255, 136, 0.05); }
+        .title { font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -1px; }
+        .subtitle { color: var(--text-dim); font-size: 1.5rem; margin-bottom: 2rem; }
+
+        .section-header { margin-bottom: 4rem; text-align: center; }
+        .section-title { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+
+        .expertise { padding: 100px 10%; }
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .expertise-card { cursor: pointer; text-align: center; }
+        .card-icon { width: 80px; height: 80px; background: var(--neon-green-dim); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--neon-green); border: 1px solid var(--glass-border); }
+        .card-icon svg { width: 32px; height: 32px; }
+        .scientific-name { color: var(--neon-green); opacity: 0.7; font-size: 0.8rem; display: block; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .faq { padding: 80px 10%; background: rgba(255,255,255,0.01); }
+        .faq-container { max-width: 850px; margin: 0 auto; }
+        .faq-item { border-radius: 20px; margin-bottom: 1.2rem; border: 1px solid var(--glass-border); overflow: hidden; background: rgba(255,255,255,0.02); transition: all 0.3s ease; }
+        .faq-question { padding: 1.8rem 2.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 1.1rem; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(0,0,0,0.3); }
+        .faq-answer p { padding: 1.5rem 2.5rem 2rem; color: var(--text-dim); font-size: 1rem; line-height: 1.7; }
+        .faq-item.active { border-color: var(--neon-green); background: rgba(0, 255, 136, 0.05); }
+        .faq-item.active .faq-answer { max-height: 500px; }
+        .faq-item.active i svg { transform: rotate(180deg); color: var(--neon-green); }
+        .faq-question i svg { transition: transform 0.3s ease; width: 20px; height: 20px; }
+
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(15px); }
+        .modal-content { width: 92%; max-width: 850px; padding: 0; border-radius: 32px; background: #0f0f0f; border: 1px solid var(--glass-border); position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); overflow: hidden; }
+        .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255,255,255,0.1); border: none; color: #fff; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.3s; }
+        .close-modal:hover { background: rgba(255,255,255,0.2); }
+
+        .footer { padding: 60px 10%; text-align: center; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.9rem; }
+
+        @media (max-width: 768px) { 
+            .nav-links { display: none; } 
+            .expertise { padding: 80px 5%; }
+            .modal-content { max-height: 90vh; overflow-y: auto; }
+            .faq-question { padding: 1.5rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="logo">D.A</div>
+        <ul class="nav-links">
+            <li><a href="#expertise">Domínio</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact" class="btn-primary">Contato</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="section-label">Advocacia de Vanguarda</span>
+            <h1 class="title">Diego Artur.</h1>
+            <p class="subtitle">Advogado especialista em regulação de novas tecnologias</p>
+            <a href="#expertise" class="btn-primary">Conhecer Áreas de Atuação</a>
+        </div>
+    </header>
+
+    <section class="expertise" id="expertise">
+        <div class="section-header">
+            <span class="section-label">Áreas de Atuação</span>
+            <h2 class="section-title">Especialidades</h2>
+        </div>
+        <div class="cards-container">
+            <div class="card glass-card expertise-card" onclick="openModal('data-security')">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                <h3>Proteção de Dados & IA</h3>
+                <span class="scientific-name">Fortaleza Digital</span>
+                <p>Adequação à LGPD, resposta a incidentes e conformidade com a Lei de IA.</p>
+            </div>
+            <div class="card glass-card expertise-card" onclick="openModal('crypto')">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <h3>Criptoativos & Blockchain</h3>
+                <span class="scientific-name">Engenharia Web3</span>
+                <p>Licenciamento junto ao Banco Central e contratos inteligentes com validade jurídica.</p>
+            </div>
+            <div class="card glass-card expertise-card" onclick="openModal('cannabis')">
+                <div class="card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8a7 7 0 0 1-7 7c-1.2 0-2.3-.3-3.3-.9Z"/><path d="M9 11a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/></svg></div>
+                <h3>Direito Regulatório & Saúde</h3>
+                <span class="scientific-name">Direito Canábico 2.0</span>
+                <p>Habeas Corpus terapêutico, licenciamento Anvisa e associações de pacientes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="section-header">
+            <span class="section-label">Base de Conhecimento</span>
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <p class="section-subtitle" style="color:var(--text-dim); margin-top:10px;">Respostas diretas para os desafios jurídicos mais complexos de 2026.</p>
+        </div>
+        <div class="faq-container">
+            <!-- 10 ITEMS START -->
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>SPSAVs: Novas normas do Banco Central em 2026?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>A partir de 2026, empresas que intermediam ou custodiam ativos virtuais devem obter autorização prévia do Banco Central como Prestadoras de Serviços de Ativos Virtuais (SPSAVs). O foco regulatório exige segregação patrimonial clara (separar os ativos dos clientes do patrimônio da empresa) e governança de dados auditável. Atuamos na estruturação jurídica para garantir o deferimento dessa licença.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Reporte DeCripto (IN 1.888): Como evitar autuações?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>A fiscalização sobre criptoativos tornou-se automatizada. Qualquer divergência no reporte mensal de saldos e transações pode gerar malha fina corporativa. Desenvolvemos estratégias de compliance fiscal específicas para corretoras e investidores de alto volume, evitando multas e o bloqueio cautelar de contas bancárias.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Anvisa 2026: Limites para o cultivo medicinal e industrial?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>O novo marco regulatório autoriza o cultivo industrial de Cannabis com baixos teores de THC, exigindo licenciamento prévio e monitoramento georreferenciado. Assessoramos indústrias e pesquisadores desde a elaboração do projeto técnico até a obtenção das Autorizações Especiais de Funcionamento (AEF) junto à Anvisa e ao Ministério da Agricultura.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Habeas Corpus Terapêutico: Ainda é necessário?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>Absolutamente. Enquanto a legislação não descriminaliza totalmente a conduta, o Habeas Corpus Preventivo é o único instrumento jurídico capaz de conceder um Salvo-Conduto. Ele blinda o paciente ou associação contra investigações policiais, garantindo a continuidade do tratamento médico sem o risco de confisco das plantas.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>DPIA e IA: Qual o impacto da nova Lei de IA?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>A Lei de IA categoriza algoritmos preditivos e LLMs como sistemas de alto risco. Para lançar essas ferramentas, é obrigatória a elaboração de um Relatório de Avaliação de Impacto (DPIA). Realizamos auditorias jurídicas nos modelos para mitigar riscos de viés algorítmico, prevenindo multas milionárias e a suspensão das atividades pela ANPD.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Smart Contracts: Validade nos tribunais brasileiros?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>Sim, desde que estruturados corretamente. O código executa a transação, mas não interpreta nuances legais. Por isso, desenvolvemos os chamados "Ricardian Contracts", que vinculam a lógica matemática da blockchain a um contrato jurídico tradicional, tornando-os plenamente executáveis em processos judiciais ou arbitrais.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Whitepapers Web3: Risco de crime financeiro?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>Emitir tokens com promessas de rendimento futuro pode configurar oferta irregular de valores mobiliários pela CVM (Comissão de Valores Mobiliários). Analisamos tecnicamente o tokenomics e a redação do seu Whitepaper para assegurar o enquadramento seguro como "Utility Token", evitando acusações de pirâmide ou crime financeiro.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Forense Digital: Recuperar ativos hackeados?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>Sim. Quando os fundos subtraídos (hacks ou scams) são movimentados para exchanges centralizadas, utilizamos relatórios de rastreamento on-chain (ex: Chainalysis) para fundamentar medidas liminares de urgência. O objetivo é bloquear judicialmente os fundos antes que sejam convertidos em moeda fiduciária.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>LGPD 2.0: Transferência internacional em nuvem?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>Com o endurecimento das normas pela ANPD, empresas que armazenam dados de brasileiros em servidores no exterior (AWS, Google Cloud) precisam adotar Cláusulas-Padrão Contratuais específicas. Conduzimos a readequação de todos os contratos com fornecedores de tecnologia para garantir conformidade técnica e jurídica.</p></div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question"><span>Sandbox Regulatório CVM: Como testar inovações?</span><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></i></div>
+                <div class="faq-answer"><p>O Sandbox permite que startups testem produtos financeiros disruptivos (como tokenização de recebíveis) no mercado real, com supervisão da CVM, mas sem precisar cumprir inicialmente todos os rigorosos requisitos de uma instituição financeira tradicional. Nossa atuação foca na elaboração do projeto de admissão e no acompanhamento estratégico junto ao órgão.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="expertise-modal" class="modal">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer class="footer"><p>&copy; 2026 Diego Artur | Advocacia de Vanguarda.</p></footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const details = {
+            'data-security': { 
+                content: \`
+                <div style="padding: 3rem 2.5rem; background: #0a0a0a; border-radius: 32px;">
+                    <span style="color:var(--neon-green); font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; display:block; margin-bottom:15px;">Governança de Dados & Inteligência Artificial</span>
+                    <h2 style="font-size:2.5rem; margin-bottom:20px; font-weight:800; line-height: 1.1; color: #fff;">Fortaleza Digital</h2>
+                    <p style="color:var(--text-dim); font-size:1.15rem; margin-bottom:30px; line-height:1.7;">A proteção de dados deixou de ser uma exigência burocrática. Com a fiscalização automatizada pela ANPD e a nova Lei de Inteligência Artificial, um vazamento ou o uso inadequado de algoritmos pode resultar em multas milionárias, interdição cautelar e dano reputacional irreversível. Estruturamos a governança jurídica que protege o seu negócio.</p>
+                    <div style="background:rgba(255,255,255,0.03); padding:25px; border-radius:16px; border:1px solid rgba(0, 255, 136, 0.1);">
+                        <h4 style="color:#fff; margin-bottom:20px; font-size:1.2rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Exemplos de Atuação:</h4>
+                        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:15px;">
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">DPIA Algorítmico (Lei de IA):</strong><span style="color:var(--text-dim); font-size:0.95rem;">Auditoria jurídica e confecção do Relatório de Impacto para modelos de Machine Learning (LLMs), mitigando riscos de interdição pela ANPD.</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Protocolo Anti-Ransomware:</strong><span style="color:var(--text-dim); font-size:0.95rem;">Plano de contenção legal em 24h. Negociação com threat actors e defesas cíveis contra litígios em massa (Class Actions).</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Engenharia de Consentimento 3.0:</strong><span style="color:var(--text-dim); font-size:0.95rem;">Mapeamento de fluxos de biometria facial, implementando arquitetura de Privacy by Design diretamente nos repositórios.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>\` 
+            },
+            'crypto': { 
+                content: \`
+                <div style="padding: 3rem 2.5rem; background: #0a0a0a; border-radius: 32px;">
+                    <span style="color:var(--neon-green); font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; display:block; margin-bottom:15px;">Criptoativos & Regulação Financeira</span>
+                    <h2 style="font-size:2.5rem; margin-bottom:20px; font-weight:800; line-height: 1.1; color: #fff;">Engenharia Web3</h2>
+                    <p style="color:var(--text-dim); font-size:1.15rem; margin-bottom:30px; line-height:1.7;">Com a regulamentação das SPSAVs pelo Banco Central, operar no mercado de criptoativos sem estrutura jurídica adequada tornou-se inviável. Atuamos na obtenção de licenças, na estruturação de ofertas de tokens e na criação de contratos inteligentes com validade nos tribunais brasileiros.</p>
+                    <div style="background:rgba(255,255,255,0.03); padding:25px; border-radius:16px; border:1px solid rgba(0, 255, 136, 0.1);">
+                        <h4 style="color:#fff; margin-bottom:20px; font-size:1.2rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Exemplos de Atuação:</h4>
+                        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:15px;">
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Licenciamento BC & Enquadramento CVM:</strong><span style="color:var(--text-dim); font-size:0.95rem;">Modelagem jurídica de exchanges, emissão de utility tokens (RWA) e staking, afastando riscos de oferta irregular.</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Ricardian Contracts & Escrow On-chain:</strong><span style="color:var(--text-dim); font-size:0.95rem;">Codificamos termos legais em contratos inteligentes auditáveis, conectando blockchain a cortes arbitrais do mundo real.</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Forense Cripto (Asset Recovery):</strong><span style="color:var(--text-dim); font-size:0.95rem;">Liminares de urgência e rastreio via Chainalysis para congelamento de fundos hackeados em corretoras centralizadas.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>\` 
+            },
+            'cannabis': { 
+                content: \`
+                <div style="padding: 3rem 2.5rem; background: #0a0a0a; border-radius: 32px;">
+                    <span style="color:var(--neon-green); font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; display:block; margin-bottom:15px;">Inovação Regulatória & Saúde</span>
+                    <h2 style="font-size:2.5rem; margin-bottom:20px; font-weight:800; line-height: 1.1; color: #fff;">Canábico 2.0</h2>
+                    <p style="color:var(--text-dim); font-size:1.15rem; margin-bottom:30px; line-height:1.7;">O novo marco regulatório abriu caminho para a indústria da Cannabis Medicinal e do Cânhamo Industrial no Brasil. Atuamos para garantir que pacientes, pesquisadores e empresas do setor possam operar com segurança jurídica plena — da obtenção de salvo-condutos à estruturação de associações e licenças sanitárias.</p>
+                    <div style="background:rgba(255,255,255,0.03); padding:25px; border-radius:16px; border:1px solid rgba(0, 255, 136, 0.1);">
+                        <h4 style="color:#fff; margin-bottom:20px; font-size:1.2rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Exemplos de Atuação:</h4>
+                        <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:15px;">
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Habeas Corpus Preventivo:</strong><span style="color:var(--text-dim); font-size:0.95rem;">A principal ferramenta jurídica para garantir salvo-conduto ao auto-cultivo terapêutico, protegendo contra incursões policiais.</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Engenharia Associativa (ONGs):</strong><span style="color:var(--text-dim); font-size:0.95rem;">Estruturação societária, tributária e sanitária para Associações de Pacientes para extração e distribuição segura.</span></div>
+                            </li>
+                            <li style="display:flex; gap:12px; align-items:flex-start;">
+                                <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+                                <div><strong style="color:#fff; display:block; margin-bottom:3px;">Licenciamento Anvisa & Mapa:</strong><span style="color:var(--text-dim); font-size:0.95rem;">Navegação regulatória para importação de sementes, georreferenciamento de plantações industriais e adequação de laboratórios.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>\` 
+            }
+        };
+
+        function toggleFaq(el) {
+            const isActive = el.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isActive) el.classList.add('active');
+        }
+
+        function openModal(k) {
+            document.getElementById('modal-body').innerHTML = details[k].content;
+            document.getElementById('expertise-modal').style.display = 'flex';
+            gsap.fromTo('.modal-content', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' });
+        }
+
+        function closeModal() {
+            gsap.to('.modal-content', { scale: 0.8, opacity: 0, duration: 0.3, onComplete: () => { document.getElementById('expertise-modal').style.display = 'none'; } });
+        }
+
+        window.onclick = (e) => { if (e.target.id === 'expertise-modal') closeModal(); };
+        window.onkeydown = (e) => { if (e.key === 'Escape') closeModal(); };
+
+        gsap.from('.hero-content > *', { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
+    </script>
+</body>
+</html>
