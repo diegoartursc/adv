@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd diego-arthur-law && npm install && npm run build",
+  "outputDirectory": "diego-arthur-law/dist",
+  "framework": null
+}
