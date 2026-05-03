@@ -190,6 +190,43 @@ const expertiseDetails: Record<string, any> = {
         </div>
       </div>
     `
+  },
+  'financeiro': {
+    title: 'Inovação Bancária',
+    content: `
+      <div class="modal-body-content" style="padding: 10px;">
+        <span class="scientific-name" style="color:var(--neon-green); font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; display:block; margin-bottom:15px;">Direito Financeiro & Fintechs</span>
+        <h2 style="font-size:2.5rem; margin-bottom:20px; font-weight:800; line-height: 1.1;">Inovação Bancária</h2>
+        <p style="color:var(--text-dim); font-size:1.15rem; margin-bottom:30px; line-height:1.7;">A revolução do mercado financeiro exige mais do que tecnologia; exige segurança regulatória. Assessoramos Fintechs, Instituições de Pagamento e provedores de Banking as a Service (BaaS) na complexa esteira regulatória do Banco Central e da CVM.</p>
+        
+        <div class="modal-services" style="background:rgba(255,255,255,0.02); padding:25px; border-radius:16px; border:1px solid rgba(0, 255, 136, 0.1);">
+          <h4 style="color:#fff; margin-bottom:20px; font-size:1.2rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Exemplos de Atuação:</h4>
+          <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:15px;">
+            <li style="display:flex; gap:12px; align-items:flex-start;">
+              <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+              <div>
+                <strong style="color:var(--text-color); display:block; margin-bottom:3px;">Licenciamento BACEN:</strong>
+                <span style="color:var(--text-dim); font-size:0.95rem;">Estruturação de Instituições de Pagamento (IP) e Sociedades de Crédito Direto (SCD). Condução de todo o processo autorizativo junto ao Banco Central, garantindo compliance com as circulares vigentes.</span>
+              </div>
+            </li>
+            <li style="display:flex; gap:12px; align-items:flex-start;">
+              <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+              <div>
+                <strong style="color:var(--text-color); display:block; margin-bottom:3px;">Open Finance & BaaS:</strong>
+                <span style="color:var(--text-dim); font-size:0.95rem;">Modelagem contratual para APIs financeiras e integração de sistemas de Banking as a Service. Desenho jurídico de fluxos de arranjos de pagamento (Pix, Cartões) e proteção de dados bancários (Sigilo Bancário).</span>
+              </div>
+            </li>
+            <li style="display:flex; gap:12px; align-items:flex-start;">
+              <span style="color:var(--neon-green); font-size:1.2rem;">&#8226;</span>
+              <div>
+                <strong style="color:var(--text-color); display:block; margin-bottom:3px;">Sandbox Regulatório:</strong>
+                <span style="color:var(--text-dim); font-size:0.95rem;">Assessoria estratégica para admissão de projetos financeiros inovadores (como tokenização de ativos) nos programas de Sandbox da CVM e BACEN, criando ambientes controlados de teste com segurança jurídica.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    `
   }
 };
 
