@@ -607,6 +607,10 @@ body {
   opacity: 1;
 }
 
+.card-icon-placeholder {
+  background: linear-gradient(145deg, rgba(0,255,136,0.03) 0%, rgba(0,0,0,0.4) 100%);
+  border: 1px dashed rgba(0, 255, 136, 0.2);
+}
 .visual-element {
   width: 100%;
   max-width: 500px;
